@@ -1,39 +1,32 @@
 import App from './App'
-import store from './store'
 
+import {tabList,changeLastPage,changeAuthorStatus} from './common/js/utils/methods';
+ //底部导航
+ Vue.prototype.$tabList = tabList //tabbar列表方法
+ Vue.prototype.$lastPage = 0 //当前tabbar点击的上一个页面
+ Vue.prototype.$changeFun =  changeLastPage
+ 
 // #ifndef VUE3
 import Vue from 'vue'
-Vue.config.productionTip = false
-Vue.prototype.$store = store
-Vue.prototype.$adpid = "1111111111"
-Vue.prototype.$backgroundAudioData = {
-	playing: false,
-	playTime: 0,
-	formatedPlayTime: '00:00:00'
-}
+
+import uView from 'uview-ui';
+Vue.use(uView);
+
+Vue.config.productionTip = false 
 App.mpType = 'app'
+
 const app = new Vue({
-	store,
-	...App
+    ...App
 })
 app.$mount()
 // #endif
 
 // #ifdef VUE3
-import {
-	createSSRApp
-} from 'vue'
+import { createSSRApp } from 'vue'
 export function createApp() {
-	const app = createSSRApp(App)
-	app.use(store)
-	app.config.globalProperties.$adpid = "1111111111"
-	app.config.globalProperties.$backgroundAudioData = {
-		playing: false,
-		playTime: 0,
-		formatedPlayTime: '00:00:00'
-	}
-	return {
-		app
-	}
+  const app = createSSRApp(App)
+  return {
+    app
+  }
 }
 // #endif
